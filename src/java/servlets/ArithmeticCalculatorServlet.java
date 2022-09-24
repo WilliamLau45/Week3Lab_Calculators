@@ -18,6 +18,8 @@ public class ArithmeticCalculatorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         request.setAttribute("arithmeticM", "---");
+        
        getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
                 .forward(request, response);
     }
@@ -27,10 +29,50 @@ public class ArithmeticCalculatorServlet extends HttpServlet {
             throws ServletException, IOException {
         String age = request.getParameter("arithmetic");
         
-        request.setAttribute("arithmetic", age);
+        String first = request.getParameter("first");
+        String second = request.getParameter("second");
+        String operation = request.getParameter("operation");
         
-      getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
+        request.setAttribute("first", first);
+        request.setAttribute("second", second);
+      
+        if (first == null || first.equals("") || second == null || second.equals("")) {
+            request.setAttribute("arithmeticM", "invalid");
+            getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
                 .forward(request, response);
+        } else {
+            try{
+                int firstN = Integer.parseInt(first);
+                int secondN = Integer.parseInt(second);
+                
+                switch(operation) {
+                    case "+":
+                        request.setAttribute("arithmeticM", firstN + secondN);
+                        break;
+                    
+                    case "-":
+                        request.setAttribute("arithmeticM", firstN - secondN);
+                        break;
+                        
+                    case "*":
+                        request.setAttribute("arithmeticM", firstN * secondN);
+                        break;
+                        
+                    case "%":
+                        request.setAttribute("arithmeticM", firstN % secondN);
+                        break;
+                }
+                getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
+                    .forward(request, response);
+                
+            } catch (NumberFormatException exception) {
+                request.setAttribute("arithmeticM", "invalid");
+                getServletContext().getRequestDispatcher("/WEB-INF/arithmeticcalculator.jsp")
+                    .forward(request, response);
+            }
+        }
+        
+    
     }
 
     
