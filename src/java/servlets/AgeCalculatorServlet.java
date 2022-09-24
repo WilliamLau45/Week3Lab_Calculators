@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ohiow
+ * @author William Lau
  */
 public class AgeCalculatorServlet extends HttpServlet {
 
@@ -24,11 +24,27 @@ public class AgeCalculatorServlet extends HttpServlet {
             throws ServletException, IOException {
         String age = request.getParameter("age");
         
-        request.setAttribute("age", age);
-        
-        getServletContext().getRequestDispatcher("/WEB-INF/agecalculator.jsp")
+        if (age == null || age.equals("")){
+            String ageM = "You must give your current age.";
+            request.setAttribute("ageM", ageM);
+             getServletContext().getRequestDispatcher("/WEB-INF/agecalculator.jsp")
                 .forward(request, response);
-    }
+        } else {
+            try { 
+                int ageO = Integer.parseInt(age);
+                int ageAdd = ageO + 1;
+                request.setAttribute("ageM", "Your age next birthday will be " + ageAdd);
+                 getServletContext().getRequestDispatcher("/WEB-INF/agecalculator.jsp")
+                .forward(request, response);
+            } catch (NumberFormatException exception) {
+                request.setAttribute("ageM", "You must enter a number.");
+                 getServletContext().getRequestDispatcher("/WEB-INF/agecalculator.jsp")
+                .forward(request, response);
+                }
+            }
+        
+     }
+            
 
 
 }

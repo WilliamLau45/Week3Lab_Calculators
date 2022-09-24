@@ -1,7 +1,7 @@
 <%-- 
     Document   : arithmeticcalculator
     Created on : Sep 23, 2022, 6:06:05 PM
-    Author     : ohiow
+    Author     : William Lau
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -20,7 +20,7 @@
             <input type="submit" name="operation" value="-">
             <input type="submit" name="operation" value="*">
             <input type="submit" name="operation" value="%"><br>
-            <p>Result: ${arithmetic} </p> 
+            <p>Result: ${arithmeticM} </p> 
             
             <a href="age">Age Calculator</a>
         </form>
